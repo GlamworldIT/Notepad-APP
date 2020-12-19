@@ -41,7 +41,7 @@ class _NoteListState extends State<NoteList> {
           color: Colors.white,
         ),
         onPressed: () {
-          navigateToDetail(Note('','', 2),"Add Note");
+          navigateToDetail(Note('', '', 2), "Add Note");
         },
       ),
     );
@@ -66,7 +66,6 @@ class _NoteListState extends State<NoteList> {
               ),
               title: Text(this.noteList[position].title),
               subtitle: Text(this.noteList[position].date),
-
               trailing: GestureDetector(
                 child: Icon(Icons.delete, color: Colors.grey),
                 onTap: () {
@@ -74,7 +73,7 @@ class _NoteListState extends State<NoteList> {
                 },
               ),
               onTap: () {
-                navigateToDetail(this.noteList[position],"Edit Note");
+                navigateToDetail(this.noteList[position], "Edit Note");
               },
             ),
           ),
@@ -102,13 +101,22 @@ class _NoteListState extends State<NoteList> {
   Icon getPriorityIcon(int priority) {
     switch (priority) {
       case 1:
-        return Icon(Icons.keyboard_arrow_right,color: Colors.white,);
+        return Icon(
+          Icons.keyboard_arrow_right,
+          color: Colors.white,
+        );
         break;
       case 2:
-        return Icon(Icons.keyboard_arrow_right,color: Colors.redAccent,);
+        return Icon(
+          Icons.keyboard_arrow_right,
+          color: Colors.redAccent,
+        );
         break;
       case 3:
-        return Icon(Icons.keyboard_arrow_right,color: Colors.redAccent,);
+        return Icon(
+          Icons.keyboard_arrow_right,
+          color: Colors.redAccent,
+        );
         break;
     }
   }
@@ -129,20 +137,21 @@ class _NoteListState extends State<NoteList> {
   }
 
   void navigateToDetail(Note note, String title) async {
-    bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) {
+    bool result =
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return NoteDetail(note, title);
     }));
 
-    if(result == true){
+    if (result == true) {
       updateListView();
     }
   }
 
-  void updateListView(){
+  void updateListView() {
     final Future<Database> dbFuture = databaseHelper.initializeDatabase();
-    dbFuture.then((database){
+    dbFuture.then((database) {
       Future<List<Note>> noteListFuture = databaseHelper.getNoteList();
-      noteListFuture.then((noteList){
+      noteListFuture.then((noteList) {
         setState(() {
           this.noteList = noteList;
           this.count = noteList.length;
@@ -150,6 +159,4 @@ class _NoteListState extends State<NoteList> {
       });
     });
   }
-
-
 }
